@@ -7,6 +7,7 @@ function show_form()
 {
 	$button.hide();
 	$('input').fadeIn(700);
+	$product.focus();
 }
 // REAKCJA NA KLIKNIĘCIE ELEMENTU LISTY //
 function click_product(e)
