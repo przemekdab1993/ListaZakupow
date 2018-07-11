@@ -1,57 +1,73 @@
-var $przycisk = $('button');
-var $sub = $('input:submit');
-var $produkt = $('input:text');
+var $button = $('button');
+var $submit = $('input:submit');
+var $product = $('input:text');
+
 var tabela_produkt = ['jabłka', 'pomidory', 'masło', 'mleko'];
 
-
-function pokaz()
+// UKRYCIE PRZYCISKU I POKAZANIE FORMULAŻA DODAJĄCEGO NOWY PRODUKT //
+function show_form()
 {
-	$('button').hide();
+	$button.hide();
 	$('input').fadeIn(700);
 }
-function klik(e)
+// REAKCJA NA KLIKNIĘCIE ELEMENTU LISTY //
+function click_product(e)
 {
 	var its = e.target;
-	var $tar = $(its);
+	var $target = $(its);
 	 
-	if ($tar.is('.hot'))
+	 // ZMIANA Z WAŻNEGO STATUSU NA ZAŁATWIONY //
+	if ($target.is('.hot'))
 	{
-		$tar.removeClass('hot');
-		$tar.addClass('cold');
-		$tar.animate({ opacity: 0.5 }, 800, function() {$kopia = $tar.detach(); $kopia.appendTo('ul'); });
+		$target.removeClass('hot');
+		$target.addClass('cold');
+		$target.animate({ opacity: 0.5 }, 800, function() {
+			var $buf = $target.detach(); 
+			$buf.appendTo('ul'); 
+		});
 	} 
 	else 
 	{
-		if ($tar.is('.cold'))
+		//UKRYWANIE NA LIŚCIE ELEMENTU ZAŁATWIONEGO //
+		if ($target.is('.cold'))
 		{
-			$tar.animate({ opacity: 0.0, paddingLeft: 0 }, 1200, function() {$tar.remove(); });
+			$target.animate({ opacity: 0.0, paddingLeft: 0 }, 1200, function() {$target.remove(); });
 		}
-		else
+		//ZMIANA Z NORMALNEGO NA WAŻNY STATUS //
+		else	
 		{
-			$tar.addClass('hot');
+			$target.addClass('hot');
 		}
 	}
 }
-function dodaj(produkt) 
+// DODAWANIE NOWEGO PUNKTU DO LISTY //
+function add_product(product) 
 {
-	
 	var $list = $('ul');
-	var $li = $('<li>' + produkt + '</li>');
-	
+	var $li = $('<li>' + product + '</li>');
 	$list.append($li);
-	$li.on('click', function(e) { klik(e); });
+	
+	$li.on('click', function(e) { click_product(e); });
 	$('input').hide();
-	$przycisk.show();
+	$button.show();
 }
 
 $( function() 
 {
+	// WYPISANIE ELEMENTÓW LISTY Z PAMIĘCI //
 	for (var i = 0; i < tabela_produkt.length; i++)
 	{
-		dodaj(tabela_produkt[i]);
+		add_product(tabela_produkt[i]);
 	}
 	$('input').hide();
 	
-	$przycisk.on('click', function() { pokaz(); });
-	$sub.on('click', function(produkt) { if($produkt.val() != '') { dodaj($produkt.val()); $produkt.val(''); } preventDefault();  });
+	$button.on('click', function() { show_form(); });
+	$submit.on('click', function() {
+		
+		if($product.val() != '') { 
+			add_product($product.val()); 
+			$product.val('');
+		} 
+		preventDefault(); 
+	});
 });
