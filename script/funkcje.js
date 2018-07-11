@@ -2,8 +2,6 @@ var $button = $('button');
 var $submit = $('input:submit');
 var $product = $('input:text');
 
-var tabela_produkt = ['jabłka', 'pomidory', 'masło', 'mleko'];
-
 // UKRYCIE PRZYCISKU I POKAZANIE FORMULAŻA DODAJĄCEGO NOWY PRODUKT //
 function show_form()
 {
@@ -14,8 +12,7 @@ function show_form()
 function click_product(e)
 {
 	var its = e.target;
-	var $target = $(its);
-	 
+	var $target = $(its);	 
 	 // ZMIANA Z WAŻNEGO STATUSU NA ZAŁATWIONY //
 	if ($target.is('.hot'))
 	{
@@ -28,9 +25,10 @@ function click_product(e)
 	} 
 	else 
 	{
-		//UKRYWANIE NA LIŚCIE ELEMENTU ZAŁATWIONEGO //
+		//UKRYCIE I USUNIĘCIE Z LISTY ELEMENTU ZAŁATWIONEGO //
 		if ($target.is('.cold'))
 		{
+			localStorage.removeItem($target.attr('id'));
 			$target.animate({ opacity: 0.0, paddingLeft: 0 }, 1200, function() {$target.remove(); });
 		}
 		//ZMIANA Z NORMALNEGO NA WAŻNY STATUS //
@@ -41,10 +39,10 @@ function click_product(e)
 	}
 }
 // DODAWANIE NOWEGO PUNKTU DO LISTY //
-function add_product(product) 
+function add_product(product, ij) 
 {
 	var $list = $('ul');
-	var $li = $('<li>' + product + '</li>');
+	var $li = $('<li id="storage_' + ij + '">' + product + '</li>');
 	$list.append($li);
 	
 	$li.on('click', function(e) { click_product(e); });
@@ -55,9 +53,9 @@ function add_product(product)
 $( function() 
 {
 	// WYPISANIE ELEMENTÓW LISTY Z PAMIĘCI //
-	for (var i = 0; i < tabela_produkt.length; i++)
+	for (var i = 0; i < localStorage.length; i++)
 	{
-		add_product(tabela_produkt[i]);
+		add_product(localStorage.getItem('storage_' + i), i);
 	}
 	$('input').hide();
 	
@@ -65,9 +63,11 @@ $( function()
 	$submit.on('click', function() {
 		
 		if($product.val() != '') { 
-			add_product($product.val()); 
+			add_product($product.val(), localStorage.length);
+			localStorage.setItem('storage_' + localStorage.length , $product.val()); 
 			$product.val('');
 		} 
 		preventDefault(); 
+	
 	});
 });
