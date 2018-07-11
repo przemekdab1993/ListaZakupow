@@ -1,9 +1,20 @@
 body
 {
 	color: #fff;
-	background-color: #1a001a;
-	font-size: 125%;
+	background-image: url("../img/bg_1.png");
+	font-size: 140%;
 	margin: 0px;
+	letter-spacing: 1px;
+	font-family: 'Source Sans Pro', sans-serif;
+}
+.body_mask
+{
+	background-color: rgba(15, 0, 15, 0.75);
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	z-index: -1;
+	top: 0px;
 }
 #container
 {
@@ -11,7 +22,7 @@ body
 }
 .box1
 {
-	width: 25%;
+	width: 30%;
 	margin: 20px auto 0px auto;
 	text-align: center;
 	padding: 20px;
@@ -20,7 +31,7 @@ body
 }
 .box2
 {
-	width: 25%;
+	width: 30%;
 	margin: 0px auto 0px auto;
 	text-align: right;
 	padding: 10px;
@@ -39,6 +50,7 @@ ul li
 	padding: 12px 20px;
 	font-weight: 700;
 	margin-bottom: 2px;
+	font-family: 'Kalam', cursive;
 }
 .hot
 {
@@ -73,4 +85,22 @@ footer
 	font-size: 80%;
 	letter-spacing: 1px;
 	word-spacing: 5px;
+}
+
+@media only screen and (max-width: 900px)
+{
+	.box1, .box2
+	{
+		width: 60%;
+	}
+@media only screen and (max-width: 600px)
+{
+	body
+	{
+		font-size: 120%;
+	}
+	.box1, .box2
+	{
+		width: 80%;
+	}
 }
