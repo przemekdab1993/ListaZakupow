@@ -1,13 +1,13 @@
 var $button = $('button');
 var $submit = $('input:submit');
 var $product = $('input:text');
+var buf_3;
 
 // UKRYCIE PRZYCISKU I POKAZANIE FORMULAŻA DODAJĄCEGO NOWY PRODUKT //
 function show_form()
 {
 	$button.hide();
 	$('input').fadeIn(700);
-	$product.focus();
 }
 // REAKCJA NA KLIKNIĘCIE ELEMENTU LISTY //
 function click_product(e)
@@ -40,10 +40,10 @@ function click_product(e)
 	}
 }
 // DODAWANIE NOWEGO PUNKTU DO LISTY //
-function add_product(product, ij) 
+function add_product(product, k) 
 {
 	var $list = $('ul');
-	var $li = $('<li id="storage_' + ij + '">' + product + '</li>');
+	var $li = $('<li id="storage_' + k + '">' + product + '</li>');
 	$list.append($li);
 	
 	$li.on('click', function(e) { click_product(e); });
@@ -54,21 +54,32 @@ function add_product(product, ij)
 $( function() 
 {
 	// WYPISANIE ELEMENTÓW LISTY Z PAMIĘCI //
-	for (var i = 0; i < localStorage.length; i++)
+	var i = 0;
+	var k = 0;
+	while( i < localStorage.length)
 	{
-		add_product(localStorage.getItem('storage_' + i), i);
+		if (localStorage.getItem('storage_'	+ k))
+		{
+			add_product(localStorage.getItem('storage_' + k), k);
+			i++;
+			k++;
+		} else
+		{
+			k++;
+		}
+	buf_3 = k;
 	}
+		
 	$('input').hide();
 	
 	$button.on('click', function() { show_form(); });
 	$submit.on('click', function() {
-		
 		if($product.val() != '') { 
-			add_product($product.val(), localStorage.length);
-			localStorage.setItem('storage_' + localStorage.length , $product.val()); 
+			buf_3++;
+			add_product($product.val(), buf_3);
+			localStorage.setItem('storage_' + buf_3 , $product.val()); 
 			$product.val('');
 		} 
 		preventDefault(); 
-	
 	});
 });
