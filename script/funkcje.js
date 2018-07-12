@@ -8,6 +8,7 @@ function show_form()
 {
 	$button.hide();
 	$('input').fadeIn(700);
+	$product.focus();
 }
 // REAKCJA NA KLIKNIĘCIE ELEMENTU LISTY //
 function click_product(e)
@@ -62,12 +63,9 @@ $( function()
 		{
 			add_product(localStorage.getItem('storage_' + k), k);
 			i++;
-			k++;
-		} else
-		{
-			k++;
 		}
-	buf_3 = k;
+		k++;
+		buf_3 = k;
 	}
 		
 	$('input').hide();
